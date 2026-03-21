@@ -49,6 +49,7 @@ while ($row = $result->fetch_assoc()) {
     <a href="reports.php" class="active">Reports</a>
     <a href="feedback.php">Feedback</a>
     <a href="php/logout.php">Logout (<?php echo htmlspecialchars($username); ?>)</a>
+    <a href="javascript:void(0)" onclick="toggleDarkMode()" class="dark-toggle" title="Toggle Dark Mode">🌙</a>
 </nav>
 
 <div class="main">
@@ -112,6 +113,7 @@ while ($row = $result->fetch_assoc()) {
     const usageData = <?php echo json_encode($usage_data); ?>;
 </script>
 <script src="js/reports.js"></script>
+<script src="js/darkmode.js"></script>
 
 </body>
 </html>
