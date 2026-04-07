@@ -1,4 +1,19 @@
-<?php session_start(); ?>
+<?php
+// ============================================================
+// SESSION & COOKIE USAGE — auth.php
+// ============================================================
+// SESSION: Used to track if user is already logged in.
+// COOKIE:  "remember_user" cookie pre-fills the username field
+//          if the user previously checked "Remember Me".
+// ============================================================
+
+session_start();  // Start/resume session
+
+// ─── READ COOKIE ─────────────────────────────────────────────
+// Check if a "remember_user" cookie exists from a previous login.
+// If it does, we'll use it to pre-fill the username field.
+$remembered_user = isset($_COOKIE['remember_user']) ? $_COOKIE['remember_user'] : '';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,7 +50,9 @@
             <?php endif; ?>
 
             <label>Username</label>
-            <input type="text" name="username" id="loginUser" placeholder="Enter username">
+            <!-- Cookie pre-fill: if remember_user cookie exists, fill the value -->
+            <input type="text" name="username" id="loginUser" placeholder="Enter username"
+                   value="<?php echo htmlspecialchars($remembered_user); ?>">
             <div class="error-msg" id="loginUserErr"></div>
 
             <label>Password</label>
@@ -44,6 +61,14 @@
 
             <div class="pass-row">
                 <input type="checkbox" onclick="togglePassword('loginPass')"> Show Password
+            </div>
+
+            <!-- COOKIE: Remember Me Checkbox -->
+            <!-- When checked, login.php sets a cookie to remember the username -->
+            <div class="pass-row">
+                <input type="checkbox" name="remember" value="1" id="rememberMe"
+                       <?php echo ($remembered_user !== '') ? 'checked' : ''; ?>>
+                <label for="rememberMe" style="display:inline; cursor:pointer;">🍪 Remember Me</label>
             </div>
 
             <button type="submit" class="btn btn-primary">Login</button>
@@ -103,6 +128,38 @@
 <footer>
     <p>&copy; 2026 Smart Energy Consumption Monitoring System</p>
 </footer>
+
+<!-- ============================================================ -->
+<!-- COOKIE CONSENT BANNER                                        -->
+<!-- This banner informs users that the site uses cookies.         -->
+<!-- It is itself managed via a cookie: once the user accepts,     -->
+<!-- we set a "cookie_consent" cookie so the banner won't reappear.-->
+<!-- ============================================================ -->
+<div id="cookieConsent" class="cookie-banner">
+    <p>🍪 This website uses cookies to enhance your experience. We use cookies for login sessions and remembering your preferences.</p>
+    <button onclick="acceptCookies()" class="btn btn-primary" style="width:auto; padding:8px 20px; font-size:13px;">Accept Cookies</button>
+</div>
+
+<script>
+// ─── COOKIE CONSENT LOGIC ────────────────────────────────────
+// Check if user has already accepted cookies
+function getCookie(name) {
+    var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return match ? match[2] : null;
+}
+
+// Show banner only if consent cookie doesn't exist
+if (getCookie('site_cookie_consent') === 'accepted') {
+    document.getElementById('cookieConsent').style.display = 'none';
+}
+
+// When user clicks accept, set a cookie and hide the banner
+function acceptCookies() {
+    // Set site_cookie_consent as a persistent cookie (1 year)
+    document.cookie = "site_cookie_consent=accepted;max-age=31536000;path=/";
+    document.getElementById('cookieConsent').style.display = 'none';
+}
+</script>
 
 <script src="js/auth.js"></script>
 <script src="js/darkmode.js"></script>

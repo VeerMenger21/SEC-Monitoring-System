@@ -73,6 +73,7 @@ function validateRegister() {
     let birth = new Date(dob.value);
     let today = new Date();
     let age = today.getFullYear() - birth.getFullYear();
+    if (today.getMonth() < birth.getMonth() || (today.getMonth() === birth.getMonth() && today.getDate() < birth.getDate())) { age--; }
     valid &= check(dob, "regDobErr", dob.value !== "" && age >= 18, "Must be 18+");
 
     valid &= check(phone, "regPhoneErr", /^[0-9]{10}$/.test(phone.value), "Must be 10 digits");
@@ -96,6 +97,7 @@ document.addEventListener("DOMContentLoaded", function() {
     let rn = document.getElementById("regName");
     let ru = document.getElementById("regUser");
     let re = document.getElementById("regEmail");
+    let rd = document.getElementById("regDob");
     let rp = document.getElementById("regPhone");
     let rz = document.getElementById("regZip");
     let rpa = document.getElementById("regPass");
@@ -108,4 +110,11 @@ document.addEventListener("DOMContentLoaded", function() {
     if (rz)  rz.oninput = () => check(rz, "regZipErr", /^[0-9]{6}$/.test(rz.value), "Must be 6 digits");
     if (rpa) rpa.oninput = () => check(rpa, "regPassErr", rpa.value.length >= 6, "Minimum 6 characters");
     if (rc)  rc.oninput = () => check(rc, "regConfirmErr", rc.value === rpa.value && rc.value !== "", "Passwords don't match");
+    if (rd)  rd.oninput = rd.onchange = () => {
+        let b = new Date(rd.value);
+        let t = new Date();
+        let a = t.getFullYear() - b.getFullYear();
+        if (t.getMonth() < b.getMonth() || (t.getMonth() === b.getMonth() && t.getDate() < b.getDate())) { a--; }
+        check(rd, "regDobErr", rd.value !== "" && a >= 18, "Must be 18+");
+    };
 });

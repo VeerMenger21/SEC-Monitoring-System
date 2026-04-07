@@ -134,6 +134,27 @@ document.querySelectorAll('.feature-card-link').forEach(function(link) {
     });
 });
 </script>
+
+<!-- COOKIE CONSENT BANNER -->
+<div id="cookieConsent" class="cookie-banner">
+    <p>🍪 This website uses cookies to enhance your experience. We use cookies for login sessions and remembering your preferences.</p>
+    <button onclick="acceptCookies()" class="btn btn-primary" style="width:auto; padding:8px 20px; font-size:13px;">Accept Cookies</button>
+</div>
+<script>
+function getCookie(name) {
+    var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return match ? match[2] : null;
+}
+if (getCookie('site_cookie_consent') === 'accepted') {
+    document.getElementById('cookieConsent').style.display = 'none';
+}
+function acceptCookies() {
+    // Set site_cookie_consent as a persistent cookie (1 year)
+    document.cookie = "site_cookie_consent=accepted;max-age=31536000;path=/";
+    document.getElementById('cookieConsent').style.display = 'none';
+}
+</script>
+
 <script src="js/darkmode.js"></script>
 </body>
 </html>

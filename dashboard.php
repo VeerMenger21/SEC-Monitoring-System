@@ -60,6 +60,20 @@ while ($row = $appliance_result->fetch_assoc()) {
     <!-- WELCOME -->
     <div class="section-box" style="text-align:center; padding:16px;">
         <h2 style="border:none; margin:0; padding:0;">Welcome, <?php echo htmlspecialchars($user_name); ?>! 👋</h2>
+        <?php
+        // ─── READING COOKIE: Display last login time ────────────
+        // The "last_login" cookie was set during the PREVIOUS login.
+        // We read it here using $_COOKIE to show the user when they
+        // last visited the site.
+        if (isset($_COOKIE['last_login'])) {
+            echo '<p style="color:#888; margin:8px 0 0; font-size:14px;">🕐 Last login: ' . htmlspecialchars($_COOKIE['last_login']) . '</p>';
+        }
+
+        // ─── READING SESSION: Display current session login time ──
+        if (isset($_SESSION['login_time'])) {
+            echo '<p style="color:#888; margin:4px 0 0; font-size:13px;">📌 Current session started: ' . htmlspecialchars($_SESSION['login_time']) . '</p>';
+        }
+        ?>
     </div>
 
     <!-- ALERTS (JS will populate) -->
