@@ -46,6 +46,7 @@ $fb_count = $conn->query("SELECT COUNT(*) as c FROM feedback")->fetch_assoc()['c
     <a href="reports.php">Reports</a>
     <a href="feedback.php">Feedback</a>
     <a href="php/logout.php">Logout (<?php echo htmlspecialchars($_SESSION['username']); ?>)</a>
+    <a href="javascript:void(0)" onclick="toggleDarkMode()" class="dark-toggle" title="Toggle Dark Mode">🌙</a>
 </nav>
 
 <div class="main">
@@ -158,5 +159,6 @@ $fb_count = $conn->query("SELECT COUNT(*) as c FROM feedback")->fetch_assoc()['c
     <p>&copy; 2026 Smart Energy Consumption Monitoring System</p>
 </footer>
 
+<script src="js/darkmode.js"></script>
 </body>
 </html>
