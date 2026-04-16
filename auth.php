@@ -126,7 +126,7 @@ $remembered_user = isset($_COOKIE['remember_user']) ? $_COOKIE['remember_user'] 
 </div>
 
 <footer>
-    <p>&copy; 2026 Smart Energy Consumption Monitoring System</p>
+    <p>&copy; 2026 Smart Energy Consumption Monitoring System | Created by Veer Menger</p>
 </footer>
 
 <!-- ============================================================ -->

@@ -106,7 +106,7 @@ while ($row = $result->fetch_assoc()) {
 </div>
 
 <footer>
-    <p>&copy; 2026 Smart Energy Consumption Monitoring System</p>
+    <p>&copy; 2026 Smart Energy Consumption Monitoring System | Created by Veer Menger</p>
 </footer>
 
 <script>

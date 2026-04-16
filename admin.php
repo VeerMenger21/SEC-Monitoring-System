@@ -156,7 +156,7 @@ $fb_count = $conn->query("SELECT COUNT(*) as c FROM feedback")->fetch_assoc()['c
 </div>
 
 <footer>
-    <p>&copy; 2026 Smart Energy Consumption Monitoring System</p>
+    <p>&copy; 2026 Smart Energy Consumption Monitoring System | Created by Veer Menger</p>
 </footer>
 
 <script src="js/darkmode.js"></script>

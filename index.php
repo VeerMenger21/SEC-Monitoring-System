@@ -114,7 +114,7 @@
 </div>
 
 <footer>
-    <p>&copy; 2026 Smart Energy Consumption Monitoring System. All Rights Reserved.</p>
+    <p>&copy; 2026 Smart Energy Consumption Monitoring System. All Rights Reserved. | Created by Veer Menger</p>
 </footer>
 
 <script>

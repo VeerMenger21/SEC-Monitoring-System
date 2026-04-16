@@ -71,7 +71,7 @@ $username = $_SESSION['username'];
 </div>
 
 <footer>
-    <p>&copy; 2026 Smart Energy Consumption Monitoring System</p>
+    <p>&copy; 2026 Smart Energy Consumption Monitoring System | Created by Veer Menger</p>
 </footer>
 
 <script src="js/feedback.js"></script>
