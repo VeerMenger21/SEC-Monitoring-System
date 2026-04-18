@@ -6,7 +6,7 @@ $uid = $_SESSION['user_id'];
 $username = $_SESSION['username'];
 
 // PHP ONLY fetches raw data — JS does ALL calculations
-$stmt = $conn->prepare("SELECT date, units_consumed, rate_per_unit FROM energy_usage WHERE user_id = ? ORDER BY date DESC");
+$stmt = $conn->prepare("SELECT date, units_consumed, rate_per_unit FROM energy_usage WHERE user_id = ? AND is_deleted = 0 ORDER BY date DESC");
 $stmt->bind_param("i", $uid);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -48,6 +48,7 @@ while ($row = $result->fetch_assoc()) {
     <?php endif; ?>
     <a href="reports.php" class="active">Reports</a>
     <a href="feedback.php">Feedback</a>
+    <a href="contact.php">Contact</a>
     <a href="php/logout.php">Logout (<?php echo htmlspecialchars($username); ?>)</a>
     <a href="javascript:void(0)" onclick="toggleDarkMode()" class="dark-toggle" title="Toggle Dark Mode">🌙</a>
 </nav>

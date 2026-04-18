@@ -9,7 +9,7 @@ $user_name = $_SESSION['user_name'];
 // PHP ONLY fetches raw data — NO calculations here
 
 // Fetch energy usage rows
-$stmt = $conn->prepare("SELECT id, date, units_consumed, rate_per_unit FROM energy_usage WHERE user_id = ? ORDER BY date DESC");
+$stmt = $conn->prepare("SELECT id, date, units_consumed, rate_per_unit FROM energy_usage WHERE user_id = ? AND is_deleted = 0 ORDER BY date DESC");
 $stmt->bind_param("i", $uid);
 $stmt->execute();
 $usage_result = $stmt->get_result();
@@ -19,7 +19,7 @@ while ($row = $usage_result->fetch_assoc()) {
 }
 
 // Fetch appliance usage rows
-$stmt2 = $conn->prepare("SELECT appliance_name, wattage, hours_used, date FROM appliance_usage WHERE user_id = ? ORDER BY date DESC");
+$stmt2 = $conn->prepare("SELECT appliance_name, wattage, hours_used, date FROM appliance_usage WHERE user_id = ? AND is_deleted = 0 ORDER BY date DESC");
 $stmt2->bind_param("i", $uid);
 $stmt2->execute();
 $appliance_result = $stmt2->get_result();
@@ -51,6 +51,7 @@ while ($row = $appliance_result->fetch_assoc()) {
     <?php endif; ?>
     <a href="reports.php">Reports</a>
     <a href="feedback.php">Feedback</a>
+    <a href="contact.php">Contact</a>
     <a href="php/logout.php">Logout (<?php echo htmlspecialchars($username); ?>)</a>
     <a href="javascript:void(0)" onclick="toggleDarkMode()" class="dark-toggle" title="Toggle Dark Mode">🌙</a>
 </nav>

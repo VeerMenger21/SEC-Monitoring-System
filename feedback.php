@@ -24,6 +24,7 @@ $username = $_SESSION['username'];
     <?php endif; ?>
     <a href="reports.php">Reports</a>
     <a href="feedback.php" class="active">Feedback</a>
+    <a href="contact.php">Contact</a>
     <a href="php/logout.php">Logout (<?php echo htmlspecialchars($username); ?>)</a>
     <a href="javascript:void(0)" onclick="toggleDarkMode()" class="dark-toggle" title="Toggle Dark Mode">🌙</a>
 </nav>

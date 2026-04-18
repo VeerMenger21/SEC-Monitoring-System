@@ -22,6 +22,7 @@
         <?php endif; ?>
         <a href="reports.php">Reports</a>
         <a href="feedback.php">Feedback</a>
+        <a href="contact.php">Contact</a>
         <a href="php/logout.php">Logout (<?php echo htmlspecialchars($_SESSION['username']); ?>)</a>
     <?php else: ?>
         <a href="auth.php">Register / Login</a>

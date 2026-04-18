@@ -14,7 +14,7 @@ include "../config.php";
 $username = $_POST['username'];
 $password = $_POST['password'];
 
-$stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
+$stmt = $conn->prepare("SELECT * FROM users WHERE username = ? AND is_deleted = 0");
 $stmt->bind_param("s", $username);
 $stmt->execute();
 $result = $stmt->get_result();

@@ -5,25 +5,29 @@ include "config.php";
 // PHP ONLY fetches raw data — no calculations
 
 // All users
-$users = $conn->query("SELECT id, name, username, email, role, DATE(created_at) as joined_date FROM users ORDER BY id DESC");
+$users = $conn->query("SELECT id, name, username, email, role, DATE(created_at) as joined_date FROM users WHERE is_deleted = 0 ORDER BY id DESC");
 
 // Total cost per user (PHP fetches, that's it)
-$cost_query = $conn->query("SELECT user_id, SUM(units_consumed * rate_per_unit) AS total_cost, SUM(units_consumed) AS total_units FROM energy_usage GROUP BY user_id");
+$cost_query = $conn->query("SELECT user_id, SUM(units_consumed * rate_per_unit) AS total_cost, SUM(units_consumed) AS total_units FROM energy_usage WHERE is_deleted = 0 GROUP BY user_id");
 $user_costs = [];
 while ($c = $cost_query->fetch_assoc()) {
     $user_costs[$c['user_id']] = $c;
 }
 
 // All energy usage with username
-$usage = $conn->query("SELECT e.id, u.username, e.date, e.units_consumed, e.rate_per_unit, e.created_at FROM energy_usage e JOIN users u ON e.user_id = u.id ORDER BY e.date DESC LIMIT 50");
+$usage = $conn->query("SELECT e.id, u.username, e.date, e.units_consumed, e.rate_per_unit, e.created_at FROM energy_usage e JOIN users u ON e.user_id = u.id WHERE e.is_deleted = 0 AND u.is_deleted = 0 ORDER BY e.date DESC LIMIT 50");
 
 // All feedback with username
-$fb = $conn->query("SELECT f.id, u.username, f.type, f.message, f.rating, f.created_at FROM feedback f JOIN users u ON f.user_id = u.id ORDER BY f.created_at DESC LIMIT 30");
+$fb = $conn->query("SELECT f.id, u.username, f.type, f.message, f.rating, f.created_at FROM feedback f JOIN users u ON f.user_id = u.id WHERE f.is_deleted = 0 AND u.is_deleted = 0 ORDER BY f.created_at DESC LIMIT 30");
+
+// All contact messages
+$contact_msgs = $conn->query("SELECT c.id, u.username, c.name, c.email, c.subject, c.message, c.created_at FROM contact_messages c JOIN users u ON c.user_id = u.id WHERE c.is_deleted = 0 AND u.is_deleted = 0 ORDER BY c.created_at DESC LIMIT 30");
 
 // Count stats for cards
-$user_count = $conn->query("SELECT COUNT(*) as c FROM users")->fetch_assoc()['c'];
-$usage_count = $conn->query("SELECT COUNT(*) as c FROM energy_usage")->fetch_assoc()['c'];
-$fb_count = $conn->query("SELECT COUNT(*) as c FROM feedback")->fetch_assoc()['c'];
+$user_count = $conn->query("SELECT COUNT(*) as c FROM users WHERE is_deleted = 0")->fetch_assoc()['c'];
+$usage_count = $conn->query("SELECT COUNT(*) as c FROM energy_usage WHERE is_deleted = 0")->fetch_assoc()['c'];
+$fb_count = $conn->query("SELECT COUNT(*) as c FROM feedback WHERE is_deleted = 0")->fetch_assoc()['c'];
+$contact_count = $conn->query("SELECT COUNT(*) as c FROM contact_messages WHERE is_deleted = 0")->fetch_assoc()['c'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,6 +49,7 @@ $fb_count = $conn->query("SELECT COUNT(*) as c FROM feedback")->fetch_assoc()['c
     <a href="admin.php" class="active">Admin</a>
     <a href="reports.php">Reports</a>
     <a href="feedback.php">Feedback</a>
+    <a href="contact.php">Contact</a>
     <a href="php/logout.php">Logout (<?php echo htmlspecialchars($_SESSION['username']); ?>)</a>
     <a href="javascript:void(0)" onclick="toggleDarkMode()" class="dark-toggle" title="Toggle Dark Mode">🌙</a>
 </nav>
@@ -64,6 +69,10 @@ $fb_count = $conn->query("SELECT COUNT(*) as c FROM feedback")->fetch_assoc()['c
         <div class="card orange">
             <h3>Feedbacks</h3>
             <div class="value"><?php echo $fb_count; ?></div>
+        </div>
+        <div class="card red">
+            <h3>Contact Msgs</h3>
+            <div class="value"><?php echo $contact_count; ?></div>
         </div>
     </div>
 
@@ -146,6 +155,28 @@ $fb_count = $conn->query("SELECT COUNT(*) as c FROM feedback")->fetch_assoc()['c
                     <td><?php echo htmlspecialchars($row['type']); ?></td>
                     <td><?php echo htmlspecialchars($row['message']); ?></td>
                     <td><?php echo str_repeat('★', $row['rating']); ?></td>
+                    <td><?php echo $row['created_at']; ?></td>
+                </tr>
+            <?php endwhile; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ALL CONTACT MESSAGES -->
+    <div class="section-box">
+        <h2>✉️ All Contact Messages (latest 30)</h2>
+        <table class="data-table">
+            <thead>
+                <tr><th>User</th><th>Name</th><th>Email</th><th>Subject</th><th>Message</th><th>Date</th></tr>
+            </thead>
+            <tbody>
+            <?php while($row = $contact_msgs->fetch_assoc()): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($row['username']); ?></td>
+                    <td><?php echo htmlspecialchars($row['name']); ?></td>
+                    <td><?php echo htmlspecialchars($row['email']); ?></td>
+                    <td><?php echo htmlspecialchars($row['subject']); ?></td>
+                    <td><?php echo htmlspecialchars($row['message']); ?></td>
                     <td><?php echo $row['created_at']; ?></td>
                 </tr>
             <?php endwhile; ?>

@@ -5,7 +5,7 @@ include "../config.php";
 $uid = $_SESSION['user_id'];
 
 // Fetch user's energy usage
-$stmt = $conn->prepare("SELECT date, units_consumed, rate_per_unit, created_at FROM energy_usage WHERE user_id = ? ORDER BY date DESC");
+$stmt = $conn->prepare("SELECT date, units_consumed, rate_per_unit, created_at FROM energy_usage WHERE user_id = ? AND is_deleted = 0 ORDER BY date DESC");
 $stmt->bind_param("i", $uid);
 $stmt->execute();
 $result = $stmt->get_result();

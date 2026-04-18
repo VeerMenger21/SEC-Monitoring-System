@@ -7,10 +7,10 @@ $uid = $_SESSION['user_id'];
 
 // Only allow deleting own data (or admin can delete any)
 if ($_SESSION['role'] === 'admin') {
-    $stmt = $conn->prepare("DELETE FROM energy_usage WHERE id = ?");
+    $stmt = $conn->prepare("UPDATE energy_usage SET is_deleted = 1 WHERE id = ?");
     $stmt->bind_param("i", $id);
 } else {
-    $stmt = $conn->prepare("DELETE FROM energy_usage WHERE id = ? AND user_id = ?");
+    $stmt = $conn->prepare("UPDATE energy_usage SET is_deleted = 1 WHERE id = ? AND user_id = ?");
     $stmt->bind_param("ii", $id, $uid);
 }
 

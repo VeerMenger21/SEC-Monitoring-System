@@ -24,6 +24,8 @@ Smart Energy Consumption Monitoring System is a web-based application with front
 - ✅ Feedback System (Star Rating)
 - ✅ Dark Mode Toggle
 - ✅ Delete Usage Entries (CRUD)
+- ✅ Soft Deletion (Data Preservation)
+- ✅ Contact Support Page
 
 ## Project Structure
 
@@ -34,6 +36,7 @@ Smart Energy Consumption Monitoring System is a web-based application with front
 ├── dashboard.php          → Main Dashboard
 ├── reports.php            → Monthly Reports
 ├── feedback.php           → Feedback Form
+├── contact.php            → Contact Support Page
 ├── admin.php              → Admin Panel
 ├── config.php             → Database Connection
 ├── database_setup.sql     → Initial DB Schema
@@ -54,9 +57,10 @@ Smart Energy Consumption Monitoring System is a web-based application with front
 │   ├── save_usage.php     → Save Energy Usage
 │   ├── save_appliance.php → Save Appliance Data
 │   ├── save_feedback.php  → Save Feedback
+│   ├── save_contact.php   → Save Contact Message
 │   ├── export_csv.php     → CSV Export
-│   ├── delete_usage.php   → Delete Usage Entry
-│   └── delete_user.php    → Delete User (Admin)
+│   ├── delete_usage.php   → Delete Usage Entry (Soft Delete)
+│   └── delete_user.php    → Delete User (Soft Delete)
 └── /assets/
     └── energy.jpg         → Hero Image
 ```
