@@ -26,6 +26,7 @@ Smart Energy Consumption Monitoring System is a web-based application with front
 - ✅ Delete Usage Entries (CRUD)
 - ✅ Soft Deletion (Data Preservation)
 - ✅ Contact Support Page
+- ✅ Cookies & Session Management
 
 ## Project Structure
 
